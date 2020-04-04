@@ -55,7 +55,7 @@ defmodule GamePlayer do
       )
       when remaining_pieces == 0 do
     case GenServer.call(board, {:move, player_name, from_pos, to_pos}) do
-      {:ok, state} ->
+      :ok ->
         new_state = {board, player_name, remaining_pieces, {from_pos, to_pos}}
         {:reply, {:ok, new_state}, new_state}
 
