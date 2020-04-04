@@ -4,6 +4,7 @@ defmodule GameState do
   use GenServer
 
   @game __MODULE__
+  @number_of_pieces 9
 
   defp get_initial_board do
     %{
@@ -33,35 +34,42 @@ defmodule GameState do
     }
   end
 
-  def create(name) do
-    GenServer.start_link(@game, {get_initial_board(), nil, nil}, name: name)
+  def create(board_name) do
+    GenServer.start_link(@game, get_initial_board(), name: board_name)
   end
 
-  def move_to_position({_player, {_pos_x, _pos_y}, name} = new_move) do
-    GenServer.call(new_move, name)
+  def show_board(board_name) do
+    GenServer.cast(board_name, :show)
   end
 
-  def do_move({board, _player, _pos}) do
-    board
+  def do_add(board, player_name, {to_pos_x, to_pos_y}) do
+    case board[{to_pos_x, to_pos_y}] do
+      0 -> {:ok, %{board | {to_pos_x, to_pos_y} => player_name}}
+      player_name -> {:error, "already selected by current player"}
+      _ -> {:error, "already selected by other player"}
+    end
   end
 
   # GenServer implementation
 
-  def init({board, _, _} = _initial_state) do
-    {:ok, {board, nil, nil}}
+  def init(initial_state) do
+    {:ok, initial_state}
+  end
+
+  def handle_cast(:show, board) do
+    IO.puts(inspect(board))
+    {:noreply, board}
   end
 
   def handle_call(
-        {:next_move, {player, {pos_x, pos_y}}},
+        {:add, player_name, {to_pos_x, to_pos_y}},
         _from,
-        {board, _player, _pos} = current_state
+        current_board
       ) do
-    new_board = do_move({board, player, {pos_x, pos_y}})
-    new_state = {new_board, player, {pos_x, pos_y}}
-
-    new_board |> IO.puts()
-
-    {:reply, new_state, current_state}
+    case do_add(current_board, player_name, {to_pos_x, to_pos_y}) do
+      {:ok, new_board} -> {:reply, :ok, new_board}
+      {:error, reason} -> {:reply, {:error, reason}, current_board}
+    end
   end
 
   def terminate(_reason, _state) do
