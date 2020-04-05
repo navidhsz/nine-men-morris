@@ -11,7 +11,7 @@ defmodule GamePlayer do
     GenServer.start_link(@game, player_state, name: player_name)
   end
 
-  def add_to_board(player_name, to_pos) do
+  def move_to_position(player_name, to_pos) do
     GenServer.call(player_name, {:next_move, {nil, to_pos}})
   end
 
@@ -19,14 +19,29 @@ defmodule GamePlayer do
     GenServer.call(player_name, {:next_move, {from_pos, to_pos}})
   end
 
-  def remove_opponent_piece(pos, other_player_name) do
-    # TODO
+  def remove_opponent_piece(player_name, pos, other_player_name) do
+    GenServer.call(player_name, {:remove, pos, other_player_name})
   end
 
   # GenServer implementation
   @impl true
   def init(initial_state) do
     {:ok, initial_state}
+  end
+
+  @impl true
+  def handle_call(
+        {:remove, pos, other_player_name},
+        _from,
+        {board, player_name, remaining_pieces, _} = current_state
+      ) do
+    case GenServer.call(board, {:remove, player_name, pos, other_player_name}) do
+      :ok ->
+        {:reply, {:ok, current_state}, current_state}
+
+      {:error, reason} ->
+        {:reply, {:error, reason}, current_state}
+    end
   end
 
   @impl true

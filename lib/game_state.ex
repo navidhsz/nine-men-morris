@@ -32,6 +32,21 @@ defmodule GameState do
     )
   end
 
+  defp process_remove(board, player_name, pos, other_player_name, value_at_pos)
+       when value_at_pos == other_player_name do
+    {:ok, %{board | pos => 0}}
+  end
+
+  defp process_remove(board, player_name, pos, other_player_name, value_at_pos)
+       when value_at_pos == 0 do
+    {:error, "position=#{pos} is empty. nothing to delete"}
+  end
+
+  defp process_remove(board, player_name, pos, other_player_name, value_at_pos)
+       when value_at_pos == player_name do
+    {:error, "position=#{pos} has current player piece. cannot delete"}
+  end
+
   # GenServer implementation
 
   @impl true
@@ -43,6 +58,19 @@ defmodule GameState do
   def handle_cast(:show, board) do
     IO.puts(inspect(board))
     {:noreply, board}
+  end
+
+  @impl true
+  def handle_call(
+        {:remove, player_name, pos, other_player_name},
+        _from,
+        current_board
+      ) do
+    case process_remove(current_board, player_name, pos, other_player_name, current_board[pos]) do
+      # TODO should check the mill
+      {:ok, new_board} -> {:reply, :ok, new_board}
+      {:error, reason} -> {:reply, {:error, reason}, current_board}
+    end
   end
 
   @impl true
