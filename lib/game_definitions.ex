@@ -111,8 +111,4 @@ defmodule GameDefinitions do
     |> Enum.filter(&match?({pos, _}, &1))
     |> Keyword.get_values(pos)
   end
-
-  def move_possible?({from_pos_x, from_pos_y}, {to_pos_x, to_pos_y}) do
-    get_possible_moves({from_pos_x, from_pos_y}) |> Enum.member?({to_pos_x, to_pos_y})
-  end
 end

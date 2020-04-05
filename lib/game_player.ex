@@ -19,7 +19,7 @@ defmodule GamePlayer do
     GenServer.call(player_name, {:next_move, {from_pos, to_pos}})
   end
 
-  def remove_opponent_piece(player_name, pos, other_player_name) do
+  def remove_opponent_piece(other_player_name, player_name, pos) do
     GenServer.call(player_name, {:remove, pos, other_player_name})
   end
 
@@ -33,7 +33,7 @@ defmodule GamePlayer do
   def handle_call(
         {:remove, pos, other_player_name},
         _from,
-        {board, player_name, remaining_pieces, _} = current_state
+        {board, player_name, _remaining_pieces, _} = current_state
       ) do
     case GenServer.call(board, {:remove, player_name, pos, other_player_name}) do
       :ok ->
@@ -42,6 +42,16 @@ defmodule GamePlayer do
       {:error, reason} ->
         {:reply, {:error, reason}, current_state}
     end
+  end
+
+  @impl true
+  def handle_call(
+        {:next_move, {nil, _to_pos}},
+        _from,
+        {_, _, remaining_pieces, _} = current_state
+      )
+      when remaining_pieces == 0 do
+    {:reply, {:error, "all the pieces are on the board. start moving the pieces"}, current_state}
   end
 
   @impl true

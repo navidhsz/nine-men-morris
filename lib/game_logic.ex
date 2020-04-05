@@ -34,7 +34,7 @@ defmodule GameLogic do
   end
 
   def can_move(
-        board,
+        _board,
         player_name,
         from_pos,
         to_pos,
@@ -48,8 +48,15 @@ defmodule GameLogic do
                to_pos,
                to_pos_state
              ) do
-          :ok -> :ok
-          {:error, reason} -> {:error, reason}
+          :ok ->
+            if MovementRules.move_possible?(from_pos, to_pos) do
+              :ok
+            else
+              {:error, "cannot move from #{from_pos} to #{to_pos}"}
+            end
+
+          {:error, reason} ->
+            {:error, reason}
         end
 
       {:error, reason} ->
@@ -57,7 +64,12 @@ defmodule GameLogic do
     end
   end
 
-  def mill?(board, player_name, mill_scenario) do
+  def mill?(board_name, player_name, pos) do
+    mill_scenarios = GameDefinitions.get_possible_mill_scenario(pos)
+    GameState.get_board(board_name) |> _mill?(player_name, mill_scenarios)
+  end
+
+  def _mill?(board, player_name, mill_scenario) do
     case mill_scenario
          |> Enum.map(fn [n, m] ->
            board[n] == player_name && board[m] == player_name

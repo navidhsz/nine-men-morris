@@ -4,7 +4,6 @@ defmodule GameState do
   use GenServer
 
   @game __MODULE__
-  @number_of_pieces 9
 
   def create(board_name) do
     GenServer.start_link(@game, GameDefinitions.get_initial_board(), name: board_name)
@@ -12,6 +11,10 @@ defmodule GameState do
 
   def show_board(board_name) do
     GenServer.cast(board_name, :show)
+  end
+
+  def get_board(board_name) do
+    GenServer.call(board_name, :get_board)
   end
 
   defp process_add(board, player_name, to_pos) do
@@ -62,6 +65,15 @@ defmodule GameState do
 
   @impl true
   def handle_call(
+        :get_board,
+        _from,
+        current_board
+      ) do
+    {:reply, current_board, current_board}
+  end
+
+  @impl true
+  def handle_call(
         {:remove, player_name, pos, other_player_name},
         _from,
         current_board
@@ -95,10 +107,5 @@ defmodule GameState do
       {:ok, new_board} -> {:reply, :ok, new_board}
       {:error, reason} -> {:reply, {:error, reason}, current_board}
     end
-  end
-
-  @impl true
-  def terminate(_reason, _state) do
-    Process.exit(self(), :normal)
   end
 end
