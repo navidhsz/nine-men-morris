@@ -16,7 +16,9 @@ defmodule NineMenMorrisWeb.Router do
   scope "/", NineMenMorrisWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    # get "/", PageController, :index
+
+    get "/game", GameController, :game
   end
 
   # Other scopes may use custom stacks.

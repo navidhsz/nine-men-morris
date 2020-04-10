@@ -14,6 +14,7 @@ defmodule GameDefinitions do
       :c4 => 0,
       :d0 => 0,
       :d1 => 0,
+      :d2 => 0,
       :d4 => 0,
       :d5 => 0,
       :d6 => 0,
