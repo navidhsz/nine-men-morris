@@ -8,6 +8,7 @@ defmodule NineMenMorris.Application do
   def start(_type, _args) do
     # List all child processes to be supervised
     NineMenMorrisGame.Main.create(:board, :player1, :player2)
+
     children = [
       # Start the Ecto repository
       # NineMenMorris.Repo,
@@ -23,7 +24,6 @@ defmodule NineMenMorris.Application do
     Supervisor.start_link(children, opts)
 
     # FIXEME should be in supervisor and remove hardcoded values
-
   end
 
   # Tell Phoenix to update the endpoint configuration
