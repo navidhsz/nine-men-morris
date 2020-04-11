@@ -9,13 +9,14 @@
       <%= csrf_meta_tag() %>
    </head>
    <body>
-      <div>
          <svg
             xmlns:svg="http://www.w3.org/2000/svg"
             xmlns="http://www.w3.org/2000/svg"
             version="1.1"
             width="700"
             height="700" viewBox="-330 -330 660 660">
+            <script type="text/javascript" src="js/app.js"></script>
+
             <rect x="-330" y="-330" width="660" height="660" style="fill:#ffffcc; stroke:none;" />
             <g style="stroke:#333333; stroke-width:10; fill:none;">
                <rect x="-300" y="-300" width="600" height="600" />
@@ -26,32 +27,31 @@
                <line x1="-300" y1="0" x2="-100" y2="0" />
                <line x1="300" y1=" 0" x2="100" y2=" 0" />
             </g>
-            <circle class="a0" cx="-300" cy="300"  r="15" />
-            <circle class="a3" cx="-300" cy="0"    r="15" />
-            <circle class="a6" cx="-300" cy="-300" r="15" />
-            <circle class="b1" cx="-200" cy="200"  r="15" />
-            <circle class="b3" cx="-200" cy="0"    r="15" />
-            <circle class="b5" cx="-200" cy="-200" r="15" />
-            <circle class="c2" cx="-100" cy="100"  r="15" />
-            <circle class="c3" cx="-100" cy="0"    r="15" />
-            <circle class="c4" cx="-100" cy="-100" r="15" />
-            <circle class="d0" cx="0"    cy="300"  r="15" />
-            <circle class="d1" cx="0"    cy="200"  r="15" />
-            <circle class="d2" cx="0"    cy="100"  r="15" />
-            <circle class="d4" cx="0"    cy="-100" r="15" />
-            <circle class="d5" cx="0"    cy="-200" r="15" />
-            <circle class="d6" cx="0"    cy="-300" r="15" />
-            <circle class="e1" cx="100"  cy="100"  r="15" />
-            <circle class="e2" cx="100"  cy="0"    r="15" />
-            <circle class="e3" cx="100"  cy="-100" r="15" />
-            <circle class="f1" cx="200"  cy="200"  r="15" />
-            <circle class="f2" cx="200"  cy="0"    r="15" />
-            <circle class="f3" cx="200"  cy="-200" r="15" />
-            <circle class="g0" cx="300"  cy="300"  r="15" />
-            <circle class="g3" cx="300"  cy="0"    r="15" />
-            <circle class="g6" cx="300"  cy="-300" r="15" />
+            <circle class="a0" fill="black" cx="-300" cy="300"  r="15" />
+            <circle class="a3" fill="black" cx="-300" cy="0"    r="15" />
+            <circle class="a6" fill="black" cx="-300" cy="-300" r="15" />
+            <circle class="b1" fill="black" cx="-200" cy="200"  r="15" />
+            <circle class="b3" fill="black" cx="-200" cy="0"    r="15" />
+            <circle class="b5" fill="black" cx="-200" cy="-200" r="15" />
+            <circle class="c2" fill="black" cx="-100" cy="100"  r="15" />
+            <circle class="c3" fill="black" cx="-100" cy="0"    r="15" />
+            <circle class="c4" fill="black" cx="-100" cy="-100" r="15" />
+            <circle class="d0" fill="black" cx="0"    cy="300"  r="15" />
+            <circle class="d1" fill="black" cx="0"    cy="200"  r="15" />
+            <circle class="d2" fill="black" cx="0"    cy="100"  r="15" />
+            <circle class="d4" fill="black" cx="0"    cy="-100" r="15" />
+            <circle class="d5" fill="black" cx="0"    cy="-200" r="15" />
+            <circle class="d6" fill="black" cx="0"    cy="-300" r="15" />
+            <circle class="e1" fill="black" cx="100"  cy="100"  r="15" />
+            <circle class="e2" fill="black" cx="100"  cy="0"    r="15" />
+            <circle class="e3" fill="black" cx="100"  cy="-100" r="15" />
+            <circle class="f1" fill="black" cx="200"  cy="200"  r="15" />
+            <circle class="f2" fill="black" cx="200"  cy="0"    r="15" />
+            <circle class="f3" fill="black" cx="200"  cy="-200" r="15" />
+            <circle class="g0" fill="black" cx="300"  cy="300"  r="15" />
+            <circle class="g3" fill="black" cx="300"  cy="0"    r="15" />
+            <circle class="g6" fill="black" cx="300"  cy="-300" r="15" />
          </svg>
-      </div>
-       <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/game.js") %>"></script>
+
    </body>
 </html>

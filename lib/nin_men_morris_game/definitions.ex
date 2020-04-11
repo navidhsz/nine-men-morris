@@ -1,4 +1,4 @@
-defmodule GameDefinitions do
+defmodule NineMenMorrisGame.Definitions do
   @moduledoc false
 
   def get_initial_board do

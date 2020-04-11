@@ -1,4 +1,4 @@
-defmodule GameState do
+defmodule NineMenMorrisGame.State do
   @moduledoc false
 
   use GenServer
@@ -6,7 +6,9 @@ defmodule GameState do
   @game __MODULE__
 
   def create(board_name) do
-    GenServer.start_link(@game, GameDefinitions.get_initial_board(), name: board_name)
+    GenServer.start_link(@game, NineMenMorrisGame.Definitions.get_initial_board(),
+      name: board_name
+    )
   end
 
   def show_board(board_name) do
@@ -18,14 +20,14 @@ defmodule GameState do
   end
 
   defp process_add(board, player_name, to_pos) do
-    GameLogic.do_add(board, player_name, to_pos)
+    NineMenMorrisGame.Logic.do_add(board, player_name, to_pos)
   end
 
   defp process_move(board, player_name, from_pos, to_pos) do
     from_pos_state = board[from_pos]
     to_pos_state = board[to_pos]
 
-    GameLogic.do_move(
+    NineMenMorrisGame.Logic.do_move(
       board,
       player_name,
       from_pos,

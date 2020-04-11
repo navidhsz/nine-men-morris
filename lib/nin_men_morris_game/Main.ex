@@ -1,4 +1,4 @@
-defmodule NineMenMorris do
+defmodule NineMenMorrisGame.Main do
   @moduledoc """
   NineMenMorris keeps the contexts that define your domain
   and business logic.
@@ -21,9 +21,9 @@ defmodule NineMenMorris do
       name: @game
     )
 
-    GameState.create(board_name)
-    GamePlayer.create(player1_name, board_name)
-    GamePlayer.create(player2_name, board_name)
+    NineMenMorrisGame.State.create(board_name)
+    NineMenMorrisGame.Player.create(player1_name, board_name)
+    NineMenMorrisGame.Player.create(player2_name, board_name)
   end
 
   def play(current_player_name, pos) do
@@ -51,7 +51,7 @@ defmodule NineMenMorris do
       )
       when from_pos == nil and player_turn == current_player_name and mill == nil do
     current_player_name
-    |> GamePlayer.move_to_position(to_pos)
+    |> NineMenMorrisGame.Player.move_to_position(to_pos)
     |> get_new_state(current_state, to_pos)
   end
 
@@ -63,7 +63,7 @@ defmodule NineMenMorris do
       )
       when player_turn == current_player_name and mill == nil do
     current_player_name
-    |> GamePlayer.move_to_position(from_pos, to_pos)
+    |> NineMenMorrisGame.Player.move_to_position(from_pos, to_pos)
     |> get_new_state(current_state, to_pos)
   end
 
@@ -84,7 +84,7 @@ defmodule NineMenMorris do
       )
       when player_turn == current_player_name and mill == current_player_name do
     case get_opponent_player(current_player_name, player1_name, player2_name)
-         |> GamePlayer.remove_opponent_piece(current_player_name, pos) do
+         |> NineMenMorrisGame.Player.remove_opponent_piece(current_player_name, pos) do
       # FIXME :ok should have better message
       {:ok, _} ->
         mill = nil
@@ -111,7 +111,7 @@ defmodule NineMenMorris do
 
     case result do
       {:ok, r} ->
-        if GameLogic.mill?(board_name, player_turn, to_pos) == true do
+        if NineMenMorrisGame.Logic.mill?(board_name, player_turn, to_pos) == true do
           mill = player_turn
           new_state = {board_name, player1_name, player2_name, player_turn, mill}
           {:reply, {:ok, r}, new_state}

@@ -1,4 +1,4 @@
-defmodule MovementRules do
+defmodule NineMenMorrisGame.MovementRules do
   @moduledoc false
 
   def valid_selection?(
@@ -43,6 +43,6 @@ defmodule MovementRules do
   end
 
   def move_possible?(from_pos, to_pos) do
-    GameDefinitions.get_possible_moves(from_pos) |> Enum.member?(to_pos)
+    NineMenMorrisGame.Definitions.get_possible_moves(from_pos) |> Enum.member?(to_pos)
   end
 end

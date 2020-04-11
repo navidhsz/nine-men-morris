@@ -1,4 +1,4 @@
-defmodule GamePlayer do
+defmodule NineMenMorrisGame.Player do
   @moduledoc false
 
   use GenServer

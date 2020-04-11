@@ -10,7 +10,7 @@ defmodule NineMenMorrisWeb.Endpoint do
     signing_salt: "b8yLloEI"
   ]
 
-  socket "/socket", NineMenMorrisWeb.UserSocket,
+  socket "/socket", NineMenMorrisWeb.GameSocket,
     websocket: true,
     longpoll: false
 
