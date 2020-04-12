@@ -15,7 +15,13 @@ defmodule NineMenMorrisWeb.GameChannel do
     action = message["action"]
     position = message["position"] |> String.to_atom()
     player_name = message["playerName"] |> String.to_atom()
+
     IO.puts("add ================")
+
+    broadcast_from(socket, "update_board_position", %{
+      :playerName => player_name,
+      :position => position
+    })
 
     case NineMenMorrisGame.Main.play(player_name, position) do
       {:ok, _r} -> {:reply, :ok, socket}
