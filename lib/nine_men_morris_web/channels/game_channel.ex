@@ -11,6 +11,43 @@ defmodule NineMenMorrisWeb.GameChannel do
     {:error, %{reason: "unauthorized"}}
   end
 
+  def handle_in("delete", message, socket) do
+    action = message["action"]
+    position = message["position"] |> String.to_atom()
+    player_name = message["playerName"] |> String.to_atom()
+
+    case NineMenMorrisGame.Main.remove(player_name, position) do
+      {:ok, _r} ->
+        update_other_player_remove(socket, player_name, position)
+        {:reply, :ok, socket}
+
+      :ok ->
+        update_other_player_remove(socket, player_name, position)
+        {:reply, :ok, socket}
+
+      {:error, reason} ->
+        {:reply, {:error, %{:reason => reason}}, socket}
+    end
+  end
+
+  def handle_in("move", message, socket) do
+    action = message["action"]
+    from_pos = message["fromPosition"] |> String.to_atom()
+    to_pos = message["toPosition"] |> String.to_atom()
+    player_name = message["playerName"] |> String.to_atom()
+
+    IO.puts("move ================")
+
+    case NineMenMorrisGame.Main.play(player_name, from_pos, to_pos) do
+      {:ok, response} ->
+        update_other_player_move(socket, player_name, from_pos, to_pos)
+        {:reply, {:ok, response}, socket}
+
+      {:error, reason} ->
+        {:reply, {:error, %{:reason => reason}}, socket}
+    end
+  end
+
   def handle_in("add", message, socket) do
     action = message["action"]
     position = message["position"] |> String.to_atom()
@@ -18,15 +55,38 @@ defmodule NineMenMorrisWeb.GameChannel do
 
     IO.puts("add ================")
 
-    broadcast_from(socket, "update_board_position", %{
-      :playerName => player_name,
-      :position => position
-    })
-
     case NineMenMorrisGame.Main.play(player_name, position) do
-      {:ok, _r} -> {:reply, :ok, socket}
-      :ok -> {:reply, :ok, socket}
-      {:error, reason} -> {:reply, {:error, %{:reason => reason}}, socket}
+      {:ok, response} ->
+        update_other_player_add(socket, player_name, position)
+        {:reply, {:ok, response}, socket}
+
+      {:error, reason} ->
+        {:reply, {:error, %{:reason => reason}}, socket}
     end
+  end
+
+  defp update_other_player_add(socket, player_name, position) do
+    broadcast_from(socket, "update_board_position_add", %{
+      :playerName => player_name,
+      :position => position,
+      :log => "#{player_name} moved to position '#{position}'"
+    })
+  end
+
+  defp update_other_player_move(socket, player_name, from_pos, to_pos) do
+    broadcast_from(socket, "update_board_position_move", %{
+      :playerName => player_name,
+      :from_pos => from_pos,
+      :to_pos => to_pos,
+      :log => "#{player_name} moved from '#{from_pos}' to position '#{to_pos}'"
+    })
+  end
+
+  defp update_other_player_remove(socket, player_name, position) do
+    broadcast_from(socket, "update_board_position_remove", %{
+      :playerName => player_name,
+      :position => position,
+      :log => "#{player_name} removed position '#{position}'"
+    })
   end
 end

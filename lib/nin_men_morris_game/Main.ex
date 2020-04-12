@@ -111,14 +111,30 @@ defmodule NineMenMorrisGame.Main do
 
     case result do
       {:ok, r} ->
+        {_, _, remaining_pieces, {_, _}} = r
+
         if NineMenMorrisGame.Logic.mill?(board_name, player_turn, to_pos) == true do
           mill = player_turn
           new_state = {board_name, player1_name, player2_name, player_turn, mill}
-          {:reply, {:ok, r}, new_state}
+
+          response = %{
+            :mill => mill,
+            :playerTurn => player_turn,
+            :remainingPieces => remaining_pieces
+          }
+
+          {:reply, {:ok, response}, new_state}
         else
           next_player = get_opponent_player(player_turn, player1_name, player2_name)
           new_state = {board_name, player1_name, player2_name, next_player, mill}
-          {:reply, :ok, new_state}
+
+          response = %{
+            :mill => mill,
+            :playerTurn => next_player,
+            :remainingPieces => remaining_pieces
+          }
+
+          {:reply, {:ok, response}, new_state}
         end
 
       {:error, reason} ->

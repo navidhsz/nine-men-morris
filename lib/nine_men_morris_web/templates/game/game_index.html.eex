@@ -31,30 +31,30 @@
                <line x1="-300" y1="0" x2="-100" y2="0" />
                <line x1="300" y1=" 0" x2="100" y2=" 0" />
             </g>
-            <circle class="a0" fill="black" cx="-300" cy="300"  r="15" />
-            <circle class="a3" fill="black" cx="-300" cy="0"    r="15" />
-            <circle class="a6" fill="black" cx="-300" cy="-300" r="15" />
-            <circle class="b1" fill="black" cx="-200" cy="200"  r="15" />
-            <circle class="b3" fill="black" cx="-200" cy="0"    r="15" />
-            <circle class="b5" fill="black" cx="-200" cy="-200" r="15" />
-            <circle class="c2" fill="black" cx="-100" cy="100"  r="15" />
-            <circle class="c3" fill="black" cx="-100" cy="0"    r="15" />
-            <circle class="c4" fill="black" cx="-100" cy="-100" r="15" />
-            <circle class="d0" fill="black" cx="0"    cy="300"  r="15" />
-            <circle class="d1" fill="black" cx="0"    cy="200"  r="15" />
-            <circle class="d2" fill="black" cx="0"    cy="100"  r="15" />
-            <circle class="d4" fill="black" cx="0"    cy="-100" r="15" />
-            <circle class="d5" fill="black" cx="0"    cy="-200" r="15" />
-            <circle class="d6" fill="black" cx="0"    cy="-300" r="15" />
-            <circle class="e1" fill="black" cx="100"  cy="100"  r="15" />
-            <circle class="e2" fill="black" cx="100"  cy="0"    r="15" />
-            <circle class="e3" fill="black" cx="100"  cy="-100" r="15" />
-            <circle class="f1" fill="black" cx="200"  cy="200"  r="15" />
-            <circle class="f2" fill="black" cx="200"  cy="0"    r="15" />
-            <circle class="f3" fill="black" cx="200"  cy="-200" r="15" />
-            <circle class="g0" fill="black" cx="300"  cy="300"  r="15" />
-            <circle class="g3" fill="black" cx="300"  cy="0"    r="15" />
-            <circle class="g6" fill="black" cx="300"  cy="-300" r="15" />
+            <circle pos="a0" class="circle" fill="black" cx="-300" cy="300"  r="15" />
+            <circle pos="a3" class="circle" fill="black" cx="-300" cy="0"    r="15" />
+            <circle pos="a6" class="circle" fill="black" cx="-300" cy="-300" r="15" />
+            <circle pos="b1" class="circle" fill="black" cx="-200" cy="200"  r="15" />
+            <circle pos="b3" class="circle" fill="black" cx="-200" cy="0"    r="15" />
+            <circle pos="b5" class="circle" fill="black" cx="-200" cy="-200" r="15" />
+            <circle pos="c2" class="circle" fill="black" cx="-100" cy="100"  r="15" />
+            <circle pos="c3" class="circle" fill="black" cx="-100" cy="0"    r="15" />
+            <circle pos="c4" class="circle" fill="black" cx="-100" cy="-100" r="15" />
+            <circle pos="d0" class="circle" fill="black" cx="0"    cy="300"  r="15" />
+            <circle pos="d1" class="circle" fill="black" cx="0"    cy="200"  r="15" />
+            <circle pos="d2" class="circle" fill="black" cx="0"    cy="100"  r="15" />
+            <circle pos="d4" class="circle" fill="black" cx="0"    cy="-100" r="15" />
+            <circle pos="d5" class="circle" fill="black" cx="0"    cy="-200" r="15" />
+            <circle pos="d6" class="circle" fill="black" cx="0"    cy="-300" r="15" />
+            <circle pos="e1" class="circle" fill="black" cx="100"  cy="100"  r="15" />
+            <circle pos="e2" class="circle" fill="black" cx="100"  cy="0"    r="15" />
+            <circle pos="e3" class="circle" fill="black" cx="100"  cy="-100" r="15" />
+            <circle pos="f1" class="circle" fill="black" cx="200"  cy="200"  r="15" />
+            <circle pos="f2" class="circle" fill="black" cx="200"  cy="0"    r="15" />
+            <circle pos="f3" class="circle" fill="black" cx="200"  cy="-200" r="15" />
+            <circle pos="g0" class="circle" fill="black" cx="300"  cy="300"  r="15" />
+            <circle pos="g3" class="circle" fill="black" cx="300"  cy="0"    r="15" />
+            <circle pos="g6" class="circle" fill="black" cx="300"  cy="-300" r="15" />
          </svg>
          </div>
 
