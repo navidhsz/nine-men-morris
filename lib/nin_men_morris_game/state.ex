@@ -82,7 +82,7 @@ defmodule NineMenMorrisGame.State do
       ) do
     case process_remove(current_board, player_name, pos, other_player_name, current_board[pos]) do
       # TODO should check the mill
-      {:ok, new_board} -> {:reply, :ok, new_board}
+      {:ok, new_board} -> {:reply, {:ok, new_board}, new_board}
       {:error, reason} -> {:reply, {:error, reason}, current_board}
     end
   end
@@ -94,7 +94,7 @@ defmodule NineMenMorrisGame.State do
         current_board
       ) do
     case process_add(current_board, player_name, to_pos) do
-      {:ok, new_board} -> {:reply, :ok, new_board}
+      {:ok, new_board} -> {:reply, {:ok, new_board}, new_board}
       {:error, reason} -> {:reply, {:error, reason}, current_board}
     end
   end
@@ -106,7 +106,7 @@ defmodule NineMenMorrisGame.State do
         current_board
       ) do
     case process_move(current_board, player_name, from_pos, to_pos) do
-      {:ok, new_board} -> {:reply, :ok, new_board}
+      {:ok, new_board} -> {:reply, {:ok, new_board}, new_board}
       {:error, reason} -> {:reply, {:error, reason}, current_board}
     end
   end

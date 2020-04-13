@@ -9,54 +9,63 @@
       <%= csrf_meta_tag() %>
    </head>
    <body>
-         <div class="player-btn-group">
-            <button background-color="green">Player1</button>
-            <button fill="gray">Player2</button>
-
-         <svg
-            xmlns:svg="http://www.w3.org/2000/svg"
-            xmlns="http://www.w3.org/2000/svg"
-            version="1.1"
-            width="700"
-            height="700" viewBox="-330 -330 660 660" class="nine-men-morris-board">
-            <script type="text/javascript" src="js/app.js"></script>
-
-            <rect x="-330" y="-330" width="660" height="660" style="fill:#ffffcc; stroke:none;" />
-            <g style="stroke:#333333; stroke-width:10; fill:none;">
-               <rect x="-300" y="-300" width="600" height="600" />
-               <rect x="-200" y="-200" width="400" height="400" />
-               <rect x="-100" y="-100" width="200" height="200" />
-               <line x1="0" y1="-300" x2="0" y2="-100" />
-               <line x1="0" y1=" 300" x2="0" y2=" 100" />
-               <line x1="-300" y1="0" x2="-100" y2="0" />
-               <line x1="300" y1=" 0" x2="100" y2=" 0" />
-            </g>
-            <circle pos="a0" class="circle" fill="black" cx="-300" cy="300"  r="15" />
-            <circle pos="a3" class="circle" fill="black" cx="-300" cy="0"    r="15" />
-            <circle pos="a6" class="circle" fill="black" cx="-300" cy="-300" r="15" />
-            <circle pos="b1" class="circle" fill="black" cx="-200" cy="200"  r="15" />
-            <circle pos="b3" class="circle" fill="black" cx="-200" cy="0"    r="15" />
-            <circle pos="b5" class="circle" fill="black" cx="-200" cy="-200" r="15" />
-            <circle pos="c2" class="circle" fill="black" cx="-100" cy="100"  r="15" />
-            <circle pos="c3" class="circle" fill="black" cx="-100" cy="0"    r="15" />
-            <circle pos="c4" class="circle" fill="black" cx="-100" cy="-100" r="15" />
-            <circle pos="d0" class="circle" fill="black" cx="0"    cy="300"  r="15" />
-            <circle pos="d1" class="circle" fill="black" cx="0"    cy="200"  r="15" />
-            <circle pos="d2" class="circle" fill="black" cx="0"    cy="100"  r="15" />
-            <circle pos="d4" class="circle" fill="black" cx="0"    cy="-100" r="15" />
-            <circle pos="d5" class="circle" fill="black" cx="0"    cy="-200" r="15" />
-            <circle pos="d6" class="circle" fill="black" cx="0"    cy="-300" r="15" />
-            <circle pos="e1" class="circle" fill="black" cx="100"  cy="100"  r="15" />
-            <circle pos="e2" class="circle" fill="black" cx="100"  cy="0"    r="15" />
-            <circle pos="e3" class="circle" fill="black" cx="100"  cy="-100" r="15" />
-            <circle pos="f1" class="circle" fill="black" cx="200"  cy="200"  r="15" />
-            <circle pos="f2" class="circle" fill="black" cx="200"  cy="0"    r="15" />
-            <circle pos="f3" class="circle" fill="black" cx="200"  cy="-200" r="15" />
-            <circle pos="g0" class="circle" fill="black" cx="300"  cy="300"  r="15" />
-            <circle pos="g3" class="circle" fill="black" cx="300"  cy="0"    r="15" />
-            <circle pos="g6" class="circle" fill="black" cx="300"  cy="-300" r="15" />
-         </svg>
-         </div>
-
+      <section>
+         <playbutton class="player-button">
+            <div class="player-btn-group">
+               <button>Player1</button>
+               <button>Player2</button>
+            </div>
+         </playbutton>
+         <logterminalsection>
+            <h4>Game logs</h4>
+            <textarea name="logterminal" class="logterminal" readonly="true" rows="10">
+            </textarea>
+         </logterminalsection>
+         <empty></empty>
+         <board>
+            <svg
+               xmlns:svg="http://www.w3.org/2000/svg"
+               xmlns="http://www.w3.org/2000/svg"
+               version="1.1"
+               width="700"
+               height="700" viewBox="-330 -330 660 660" class="nine-men-morris-board">
+               <script type="text/javascript" src="js/app.js"></script>
+               <rect x="-330" y="-330" width="660" height="660" style="fill:#ffffcc; stroke:none;" />
+               <g style="stroke:#333333; stroke-width:10; fill:none;">
+                  <rect x="-300" y="-300" width="600" height="600" />
+                  <rect x="-200" y="-200" width="400" height="400" />
+                  <rect x="-100" y="-100" width="200" height="200" />
+                  <line x1="0" y1="-300" x2="0" y2="-100" />
+                  <line x1="0" y1=" 300" x2="0" y2=" 100" />
+                  <line x1="-300" y1="0" x2="-100" y2="0" />
+                  <line x1="300" y1=" 0" x2="100" y2=" 0" />
+               </g>
+               <circle pos="a0" class="circle" fill="black" cx="-300" cy="300"  r="15" />
+               <circle pos="a3" class="circle" fill="black" cx="-300" cy="0"    r="15" />
+               <circle pos="a6" class="circle" fill="black" cx="-300" cy="-300" r="15" />
+               <circle pos="b1" class="circle" fill="black" cx="-200" cy="200"  r="15" />
+               <circle pos="b3" class="circle" fill="black" cx="-200" cy="0"    r="15" />
+               <circle pos="b5" class="circle" fill="black" cx="-200" cy="-200" r="15" />
+               <circle pos="c2" class="circle" fill="black" cx="-100" cy="100"  r="15" />
+               <circle pos="c3" class="circle" fill="black" cx="-100" cy="0"    r="15" />
+               <circle pos="c4" class="circle" fill="black" cx="-100" cy="-100" r="15" />
+               <circle pos="d0" class="circle" fill="black" cx="0"    cy="300"  r="15" />
+               <circle pos="d1" class="circle" fill="black" cx="0"    cy="200"  r="15" />
+               <circle pos="d2" class="circle" fill="black" cx="0"    cy="100"  r="15" />
+               <circle pos="d4" class="circle" fill="black" cx="0"    cy="-100" r="15" />
+               <circle pos="d5" class="circle" fill="black" cx="0"    cy="-200" r="15" />
+               <circle pos="d6" class="circle" fill="black" cx="0"    cy="-300" r="15" />
+               <circle pos="e1" class="circle" fill="black" cx="100"  cy="100"  r="15" />
+               <circle pos="e2" class="circle" fill="black" cx="100"  cy="0"    r="15" />
+               <circle pos="e3" class="circle" fill="black" cx="100"  cy="-100" r="15" />
+               <circle pos="f1" class="circle" fill="black" cx="200"  cy="200"  r="15" />
+               <circle pos="f2" class="circle" fill="black" cx="200"  cy="0"    r="15" />
+               <circle pos="f3" class="circle" fill="black" cx="200"  cy="-200" r="15" />
+               <circle pos="g0" class="circle" fill="black" cx="300"  cy="300"  r="15" />
+               <circle pos="g3" class="circle" fill="black" cx="300"  cy="0"    r="15" />
+               <circle pos="g6" class="circle" fill="black" cx="300"  cy="-300" r="15" />
+            </svg>
+         </board>
+      </section>
    </body>
 </html>

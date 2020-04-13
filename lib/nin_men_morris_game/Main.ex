@@ -38,6 +38,10 @@ defmodule NineMenMorrisGame.Main do
     GenServer.call(@game, {:remove, current_player_name, pos})
   end
 
+  def get_board_state() do
+    NineMenMorrisGame.State.get_board(@game)
+  end
+
   @impl true
   def init(initial_state) do
     {:ok, initial_state}
@@ -86,11 +90,13 @@ defmodule NineMenMorrisGame.Main do
     case get_opponent_player(current_player_name, player1_name, player2_name)
          |> NineMenMorrisGame.Player.remove_opponent_piece(current_player_name, pos) do
       # FIXME :ok should have better message
-      {:ok, _} ->
+      {:ok, current_state, new_board} ->
         mill = nil
         next_player = get_opponent_player(current_player_name, player1_name, player2_name)
         new_state = {board_name, player1_name, player2_name, next_player, mill}
-        {:reply, :ok, new_state}
+        response = construct_response(mill, player_turn, 0, new_board)
+
+        {:reply, {:ok, response}, new_state}
 
       {:error, reason} ->
         {:reply, {:error, reason}, current_state}
@@ -110,29 +116,21 @@ defmodule NineMenMorrisGame.Main do
     {board_name, player1_name, player2_name, player_turn, mill} = current_state
 
     case result do
-      {:ok, r} ->
+      {:ok, r, new_board} ->
         {_, _, remaining_pieces, {_, _}} = r
 
         if NineMenMorrisGame.Logic.mill?(board_name, player_turn, to_pos) == true do
           mill = player_turn
           new_state = {board_name, player1_name, player2_name, player_turn, mill}
 
-          response = %{
-            :mill => mill,
-            :playerTurn => player_turn,
-            :remainingPieces => remaining_pieces
-          }
+          response = construct_response(mill, player_turn, remaining_pieces, new_board)
 
           {:reply, {:ok, response}, new_state}
         else
           next_player = get_opponent_player(player_turn, player1_name, player2_name)
           new_state = {board_name, player1_name, player2_name, next_player, mill}
 
-          response = %{
-            :mill => mill,
-            :playerTurn => next_player,
-            :remainingPieces => remaining_pieces
-          }
+          response = construct_response(mill, next_player, remaining_pieces, new_board)
 
           {:reply, {:ok, response}, new_state}
         end
@@ -150,5 +148,14 @@ defmodule NineMenMorrisGame.Main do
   defp get_opponent_player(current_player_name, player1_name, player2_name)
        when current_player_name == player2_name do
     player1_name
+  end
+
+  defp construct_response(mill, player_turn, remaining_pieces, board) do
+    %{
+      :mill => mill,
+      :playerTurn => player_turn,
+      :remainingPieces => remaining_pieces,
+      :board => board
+    }
   end
 end

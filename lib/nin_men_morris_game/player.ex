@@ -36,8 +36,8 @@ defmodule NineMenMorrisGame.Player do
         {board, player_name, _remaining_pieces, _} = current_state
       ) do
     case GenServer.call(board, {:remove, player_name, pos, other_player_name}) do
-      :ok ->
-        {:reply, {:ok, current_state}, current_state}
+      {:ok, new_board} ->
+        {:reply, {:ok, current_state, new_board}, current_state}
 
       {:error, reason} ->
         {:reply, {:error, reason}, current_state}
@@ -62,10 +62,10 @@ defmodule NineMenMorrisGame.Player do
       )
       when remaining_pieces > 0 do
     case GenServer.call(board, {:add, player_name, to_pos}) do
-      :ok ->
+      {:ok, new_board} ->
         new_state = {board, player_name, remaining_pieces - 1, {from_pos, to_pos}}
 
-        {:reply, {:ok, new_state}, new_state}
+        {:reply, {:ok, new_state, new_board}, new_state}
 
       {:error, reason} ->
         {:reply, {:error, reason}, current_state}
@@ -80,9 +80,9 @@ defmodule NineMenMorrisGame.Player do
       )
       when remaining_pieces == 0 do
     case GenServer.call(board, {:move, player_name, from_pos, to_pos}) do
-      :ok ->
+      {:ok, new_board} ->
         new_state = {board, player_name, remaining_pieces, {from_pos, to_pos}}
-        {:reply, {:ok, new_state}, new_state}
+        {:reply, {:ok, new_state, new_board}, new_state}
 
       {:error, reason} ->
         {:reply, {:error, reason}, current_state}

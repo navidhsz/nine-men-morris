@@ -11,19 +11,15 @@ defmodule NineMenMorrisWeb.GameChannel do
     {:error, %{reason: "unauthorized"}}
   end
 
-  def handle_in("delete", message, socket) do
+  def handle_in("remove", message, socket) do
     action = message["action"]
     position = message["position"] |> String.to_atom()
     player_name = message["playerName"] |> String.to_atom()
 
     case NineMenMorrisGame.Main.remove(player_name, position) do
-      {:ok, _r} ->
-        update_other_player_remove(socket, player_name, position)
-        {:reply, :ok, socket}
-
-      :ok ->
-        update_other_player_remove(socket, player_name, position)
-        {:reply, :ok, socket}
+      {:ok, response} ->
+        update_other_player_remove(socket, player_name, position, response[:board])
+        {:reply, {:ok, response}, socket}
 
       {:error, reason} ->
         {:reply, {:error, %{:reason => reason}}, socket}
@@ -40,7 +36,7 @@ defmodule NineMenMorrisWeb.GameChannel do
 
     case NineMenMorrisGame.Main.play(player_name, from_pos, to_pos) do
       {:ok, response} ->
-        update_other_player_move(socket, player_name, from_pos, to_pos)
+        update_other_player_move(socket, player_name, from_pos, to_pos, response[:board])
         {:reply, {:ok, response}, socket}
 
       {:error, reason} ->
@@ -57,7 +53,7 @@ defmodule NineMenMorrisWeb.GameChannel do
 
     case NineMenMorrisGame.Main.play(player_name, position) do
       {:ok, response} ->
-        update_other_player_add(socket, player_name, position)
+        update_other_player_add(socket, player_name, position, response[:board])
         {:reply, {:ok, response}, socket}
 
       {:error, reason} ->
@@ -65,28 +61,31 @@ defmodule NineMenMorrisWeb.GameChannel do
     end
   end
 
-  defp update_other_player_add(socket, player_name, position) do
+  defp update_other_player_add(socket, player_name, position, board) do
     broadcast_from(socket, "update_board_position_add", %{
       :playerName => player_name,
       :position => position,
+      :board => board,
       :log => "#{player_name} moved to position '#{position}'"
     })
   end
 
-  defp update_other_player_move(socket, player_name, from_pos, to_pos) do
+  defp update_other_player_move(socket, player_name, from_pos, to_pos, board) do
     broadcast_from(socket, "update_board_position_move", %{
       :playerName => player_name,
       :from_pos => from_pos,
       :to_pos => to_pos,
+      :board => board,
       :log => "#{player_name} moved from '#{from_pos}' to position '#{to_pos}'"
     })
   end
 
-  defp update_other_player_remove(socket, player_name, position) do
+  defp update_other_player_remove(socket, player_name, position, board) do
     broadcast_from(socket, "update_board_position_remove", %{
       :playerName => player_name,
       :position => position,
-      :log => "#{player_name} removed position '#{position}'"
+      :board => board,
+      :log => "#{player_name} removed a piece from position '#{position}'"
     })
   end
 end
