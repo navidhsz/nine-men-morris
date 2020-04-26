@@ -6,5 +6,5 @@ Nine men's morris game is a strategy board game for two players.
 
 This repo contains a Web implementation of the game using Elixir/Phoenix
 
-![board-image](doc/img/board.png){:height="30%" width="30%"}
+![board-image](doc/img/board.png)
 
